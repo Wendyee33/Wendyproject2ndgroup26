@@ -8,6 +8,9 @@ public class LoginPage {
 
 WebDriver driver;
 
+public void verifyLoginPageIsDisplayed()throws InterruptedException{
+    Thread.sleep(5000);
+}
     public LoginPage(WebDriver driver) {
         this.driver = driver;
     }

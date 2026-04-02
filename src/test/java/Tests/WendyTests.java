@@ -1,39 +1,48 @@
 package Tests;
 import Utils.BrowserFactory;
+import Utils.TakeScreenShots;
 import WendyPages.HomePage;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 import WendyPages.LoginPage;
 import WendyPages.DashboardPage;
 
 import static Utils.Base.driver;
 
-
 public class WendyTests {
 
-    @Test
-    public void logintowendyprojectTests() throws InterruptedException {
+    public void verifyHomePageIsDisplayed() {
+        TakeScreenShots takeScreenShots = new TakeScreenShots();
+        takeScreenShots.takesSnapShot(driver, "HomePageScreenshot1");
     }
+
+    @Test
+    public void logintowendyprojectTests() {
+        driver = BrowserFactory.startBrowser("Edge", "https://ndosisimplifiedautomation.vercel.app/");
+    }
+
     @Test
     public void loginToHomePage() throws InterruptedException {
 
-        WebDriver driver=new org.openqa.selenium.edge.EdgeDriver();
-       driver.manage().window().maximize();
-       driver.get("https://ndosisimplifiedautomation.vercel.app/");
-       Thread.sleep(3000);
+        driver = new org.openqa.selenium.edge.EdgeDriver();
+        driver.manage().window().maximize();
+        driver.get("https://ndosisimplifiedautomation.vercel.app/");
+        Thread.sleep(3000);
 
-        //BROWSER PAGE
-        LoginPage loginPage=new LoginPage(driver);
+//BROWSER PAGE
+        LoginPage loginPage = new LoginPage(driver);
         HomePage homePage = new HomePage(driver);
         DashboardPage dashboard = new DashboardPage(driver);
-        BrowserFactory browserFactory=new BrowserFactory();
 
         //LOGIN PAGE
         loginPage.clickLoginButton();
         loginPage.emailDetails();
         loginPage.enterPassword();
         loginPage.clickSubmit();
-        Thread.sleep(3000);
+        loginPage.verifyLoginPageIsDisplayed();
+        verifyHomePageIsDisplayed();
+        Thread.sleep(2000);
 
 // HOMEPAGE
         homePage.HomePageisDisplayed();
@@ -41,6 +50,7 @@ public class WendyTests {
         homePage.clicksubmit();
         homePage.headingButton();
         Thread.sleep(3000);
+
 
 // DASHBOARD
         dashboard.clickPassWord();
@@ -53,7 +63,9 @@ public class WendyTests {
         Thread.sleep(3000);
     }
 
+    @AfterTest
+    public void closeBrowser() {
+        driver.quit();
+
+    }
 }
-
-
-

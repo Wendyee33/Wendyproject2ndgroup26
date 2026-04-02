@@ -14,8 +14,14 @@ public class TakeScreenShots {
     public void takesSnapShot(WebDriver driver, String screenshotName) {
 
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
+
+
         File src = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        File destination = new File(screenshotDir, screenshotName + ".png");
+
+
+        File destination = new File(screenshotDir, screenshotName + ".jpeg");
+
+
         try {
             FileUtils.copyFile(src, destination);
         } catch (IOException e) {
